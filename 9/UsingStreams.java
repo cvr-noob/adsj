@@ -1,6 +1,10 @@
-import java.util.*;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
-public class Main {
+public class UsingStreams {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Set<Person> setA = new HashSet<>();
@@ -22,21 +26,19 @@ public class Main {
         }
         System.out.println("Set A: " + setA.toString());
 
-        Set<Person> setB = new HashSet<>();
-        Set<Person> setC = new HashSet<>();
+        Set<Person> setB = setA.stream()
+                .filter(p -> p.age > 60)
+                .collect(Collectors.toSet());
+        System.out.println("Set B: " + setB);
 
-        for (Person p : setA) {
-            if (p.age > 60) {
-                setB.add(p);
-            }
-            if (p.income < 10000) {
-                setC.add(p);
-            }
-        }
-        System.out.println("Set B: " + setB.toString());
-        System.out.println("Set C: " + setC.toString());
+        Set<Person> setC = setA.stream()
+                .filter(p -> p.income < 10000)
+                .collect(Collectors.toSet());
+        System.out.println("Set C: " + setC);
 
-        setB.retainAll(setC);
-        System.out.println("B & C: " + setB);
+        Set<Person> setB_setC = setB.stream()
+                .filter(setC::contains)
+                .collect(Collectors.toSet());
+        System.out.println("B & C: " + setB_setC);
     }
 }
