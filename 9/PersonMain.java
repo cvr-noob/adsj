@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Main {
+public class PersonMain {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Set<Person> setA = new HashSet<>();
